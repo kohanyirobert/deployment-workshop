@@ -28,7 +28,7 @@ jobs:
         id: push
         uses: docker/build-push-action@v5.3.0
         with:
-          context: .
+          context: backend/asp
           push: true
           tags: ${{ env.IMAGE_NAME }}
       - name: Generate artifact attestation
