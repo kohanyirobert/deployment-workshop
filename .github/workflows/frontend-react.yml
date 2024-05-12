@@ -17,3 +17,5 @@ jobs:
     with:
       path: frontend/react
       tag: react
+      buildArgs: |
+        VITE_APP_TITLE=Deployment workshop (GitHub Actions)
