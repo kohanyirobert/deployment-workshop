@@ -9,19 +9,19 @@ function App() {
   useEffect(() => {
     async function fetchCars() {
       try {
-        const data = await fetch(`${import.meta.env.BASE_URL}api/cars`)
-        if (data.status === 200) {
-          const cars = await data.json()
+        const response = await fetch(`${import.meta.env.BASE_URL}api/cars`)
+        if (response.status === 200) {
+          const cars = await response.json()
           setCars(cars)
         } else {
-          const text = await data.text()
-          setError(text)
-          console.error(text)
+          const message = `${response.statusText} ${response.status}`
+          setError(message)
+          console.error(message)
         }
       } catch (e) {
-        setCars([])
-        setError(e)
-        console.error(e)
+        const message = `${response.statusText} ${response.status}`
+        setError(message)
+        console.error(message)
       }
     }
     fetchCars()

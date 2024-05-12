@@ -9,9 +9,7 @@ You should have a basic understanding of
 - container (e.g Docker) images and containers, published ports, volumes
 - environment variables
 
-## Getting started
-
-### Database
+## Database
 
 Each backend samples uses a database (e.g. PostgreSQL).
 Backends expect data as seen in [`init.sql`](init.sql).
@@ -40,14 +38,16 @@ docker run `
     postgres
 ```
 
-### Backend
+## Backend
 
 There are two backend samples one for ASP.NET and one for Express.
 They provide the same `/api/cars` endpoint which in turn queries the aforementioned database.
 
-#### ASP
+### ASP
 
-##### Rider
+#### Rider
+
+During local development you most probably will run the backend in your IDE, or maybe in the terminal with `dotnet run`.
 
 1. Load up the project in your IDE and simply start the `http` run configuration
 2. See [`launchSettings.json`](backend/asp/Properties/launchSettings.json) and [`appsettings.Development.json`](backend/asp/appsettings.Development.json)
@@ -56,7 +56,9 @@ They provide the same `/api/cars` endpoint which in turn queries the aforementio
 4. In you browser http://localhost:5165/api/cars open up automatically, if not simply visit it
 5. You should see a JSON array with same car related data in it
 
-##### Docker
+Note: **to overwrite the default development connection string in use `dotnet user-secret` and set the same key to a different value.**
+
+#### Docker
 
 1. Build the image (**make sure to change your current directory to `backend/asp` before running the command**)
 
@@ -79,14 +81,18 @@ They provide the same `/api/cars` endpoint which in turn queries the aforementio
 
 3. Visit http://localhost:8080/api/cars in your browser, you should see the previously seen JSON with car data
 
-#### Express
+### Express
 
-##### Terminal
+#### Terminal
+
+During local development you start the backend in your terminal your IDE.
 
 1. Run 'npm install` in `backend/express`
 2. Then simply run `node index.js`
 
-##### Docker
+Note: **to overwrite the default `PG_URL` used by the app create an `.env.local` configuration file and override the same key with a different value.**
+
+#### Docker
 
 1. Build the image (**make sure to change your current directory to `backend/express` before running the command**)
 
@@ -116,15 +122,39 @@ They provide the same `/api/cars` endpoint which in turn queries the aforementio
 
 3. Visit http://localhost:3456/api/cars in your browser, you should see the previously seen JSON with car data
 
-# Development
-
-## PowerShell
-
-
-
-
-
-Default username is `postgres`. See [the official PostgreSQL image's documentation](https://hub.docker.com/_/postgres) for more.
-
-
 ## Frontend
+
+### Terminal
+
+1. Configure the proxy's hostname and port in `vite.config.js`
+2. Then run `npm run dev`
+3. Visit http://localhost:5173, you should see the car related data on the website
+4. Open your browser's developemt tools and go to the _Network_ tab then refresh the page, **notice that there's a request sent to http://localhost:5173/api/cars which is important (the hostname and port is the same)**
+
+Note: **to override the app's default name set in `.env` create a new  `.env.local` file and set the same key to a different value.**
+
+### Docker
+
+1. Build the image (**make sure to change your current directory to `frontend/react` before running the command**)
+
+    ```pwsh
+    docker build -t deployment-workshop-frontend:react .
+    ```
+
+2. Run a new container based on the image
+
+    ```pwsh
+    docker run `
+        --name deployment-workshop-frontend-react `
+        --network workshop `
+        --publish 4173:4173 `
+        --env NODE_ENV=production `
+        --env VITE_APP_TITLE="Deployment Workshop (docker)" `
+        --env VITE_APP_PROXY="http://deployment-workshop-backend-asp:8080" `
+        deployment-workshop-frontend:react
+    ```
+
+3. Visit http://localhost:4173, you should see the car related data displayed on the webpage
+
+
+Note: **`VITE_APP_PROXY` is set to use `deployment-workshop-backend-asp:8080`, but it could have been the `express` version with a different port if that service is running.**
