@@ -9,6 +9,9 @@ on:
       tag:
         required: true
         type: string
+      buildArgs:
+        required: false
+        type: string
 
 env:
   REGISTRY: ghcr.io
