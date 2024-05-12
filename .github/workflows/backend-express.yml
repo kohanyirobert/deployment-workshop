@@ -3,9 +3,11 @@ name: Build and push backend Express image
 on:
   push:
     branches: ['main']
+    paths:
+      - backend/express
 
 jobs:
-  build-and-push-image:
+  backend-express:
     uses: ./.github/workflows/build-and-push.yml
     permissions:
       contents: read
