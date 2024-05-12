@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     server: {
       proxy: {
-        '/api': env.VITE_APP_PROXY,
+        '/api': env.VITE_PROXY,
       },
     }
   }

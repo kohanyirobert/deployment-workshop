@@ -63,7 +63,7 @@ Note: **to overwrite the default development connection string in use `dotnet us
 1. Build the image (**make sure to change your current directory to `backend/asp` before running the command**)
 
     ```pwsh
-    docker build -t deployment-workshop-backend:asp .
+    docker build --tag deployment-workshop-backend:asp .
     ```
 
 2. Run a new container based on the image
@@ -97,7 +97,7 @@ Note: **to overwrite the default `PG_URL` used by the app create an `.env.local`
 1. Build the image (**make sure to change your current directory to `backend/express` before running the command**)
 
     ```pwsh
-    docker build -t deployment-workshop-backend:express .
+    docker build --tag deployment-workshop-backend:express .
     ```
 
     Note: the _tag_ changed to `express` at the end of the tag name.
@@ -138,8 +138,12 @@ Note: **to override the app's default name set in `.env` create a new  `.env.loc
 1. Build the image (**make sure to change your current directory to `frontend/react` before running the command**)
 
     ```pwsh
-    docker build -t deployment-workshop-frontend:react .
+    docker build `
+        --build-arg VITE_APP_TITLE="Deployment Workshop (docker)" `
+        --tag deployment-workshop-frontend:react .
     ```
+
+Note: **`VITE_APP_TITLE` must be set as a `--buid-arg` since it's required during `npm run build`, and since `.env` won't be copied to the Docker image being built it needs to be set like this.**
 
 2. Run a new container based on the image
 
@@ -149,12 +153,11 @@ Note: **to override the app's default name set in `.env` create a new  `.env.loc
         --network workshop `
         --publish 4173:4173 `
         --env NODE_ENV=production `
-        --env VITE_APP_TITLE="Deployment Workshop (docker)" `
-        --env VITE_APP_PROXY="http://deployment-workshop-backend-asp:8080" `
+        --env VITE_PROXY='http://deployment-workshop-backend-asp:8080' `
         deployment-workshop-frontend:react
     ```
 
 3. Visit http://localhost:4173, you should see the car related data displayed on the webpage
 
 
-Note: **`VITE_APP_PROXY` is set to use `deployment-workshop-backend-asp:8080`, but it could have been the `express` version with a different port if that service is running.**
+Note: **`VITE_PROXY` is set to use `deployment-workshop-backend-asp:8080`, but it could have been the `express` version with a different port if that service is running.**
