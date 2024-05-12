@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-and-push-image:
-    uses: ./.github/workflows/backend.yml
+    uses: ./.github/workflows/build-and-push.yml
     permissions:
       contents: read
       packages: write
