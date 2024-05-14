@@ -18,3 +18,4 @@ jobs:
     with:
       path: backend/asp
       tag: asp
+      render-deploy-url: ${{ secrets.RENDER_BACKEND_ASP_DEPLOY_HOOK_URL }}

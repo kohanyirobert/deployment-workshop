@@ -18,3 +18,4 @@ jobs:
     with:
       path: backend/express
       tag: express
+      render-deploy-url: ${{ secrets.RENDER_BACKEND_EXPRESS_DEPLOY_HOOK_URL }}
