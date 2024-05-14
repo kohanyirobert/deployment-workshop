@@ -9,12 +9,12 @@ on:
       tag:
         required: true
         type: string
-      render-deploy-url:
-        required: true
-        type: string
       build-args:
         required: false
         type: string
+    secrets:
+      render-deploy-url:
+        required: true
 
 env:
   REGISTRY: ghcr.io
