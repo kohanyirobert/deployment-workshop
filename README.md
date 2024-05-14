@@ -161,3 +161,7 @@ Note: **`VITE_APP_TITLE` must be set as a `--buid-arg` since it's required durin
 
 
 Note: **`VITE_PROXY` is set to use `deployment-workshop-backend-asp:8080`, but it could have been the `express` version with a different port if that service is running.**
+
+## Deployment
+
+Note: on render.com free instanes spin up slowly and spin down after a while. When you notice 404 errors and such don't think that you made an erro, maybe you just need to wait. Check the logs and check each service whether it's alive or not.
