@@ -165,3 +165,47 @@ Note: **`VITE_PROXY` is set to use `deployment-workshop-backend-asp:8080`, but i
 ## Deployment
 
 Note: on render.com free instanes spin up slowly and spin down after a while. When you notice 404 errors and such don't think that you made an erro, maybe you just need to wait. Check the logs and check each service whether it's alive or not.
+
+There are a million ways to deploy something somewhere, let's explore the following scenario.
+
+1. You have a webapplication stack (frontend, backend and database)
+2. You can/want to or already Dockerized these
+3. You want to have a publicly accessible instance/deployment of your webapplication
+4. You want this for free, so you want to use [render.com]()
+
+## Manual or automatic (continuous) deployment
+
+### Manual
+
+Manual deployment would mean that whenever you have a new version of your app you do these steps:
+
+1. Commit your changes in a repository
+2. Trigger a build of your application (or building a Docker image of your application) manually in your terminal on your development machine
+3. Pushing that image to a container registry (private or public)
+4. Go to [render.com]() (create or use an already existing service)
+    - At this point you might be required set a heap of environment variables to their correct values in order to _tune_ your webapplication stacks components to work correctly together
+5. Trigger a redeploy
+
+Nothing wrong with this, but as a developer or DevOps engineer you might be required to understand how to automate this.
+
+### Automatic (continuous)
+
+You might heard about CI/CD, here we'll discuss the CD, continuous deployment part of it. Continuous integration is related to this concept of course, and often times they go hand-in-hand.
+
+To make the manual automatic we want to achieve this:
+
+1. Commit your changes in a repository
+2. This should trigger a build automatically somewhere other than your development machine
+    - For this we'll be using the GitHub Actions platform which can be used exactly for this
+    - You define a workflow which describes what happens on a new commit on a certain branch and automate the stesp you would take manually
+3. A build (one or more jobs) run on GitHub Actions
+4. At the end of the build your application binaries (or a Docker image) gets delivery/pushed to somewhere
+    - The "somewhere" in our case will be GitHub's container registry ([ghcr.io]()), which basically bound to a GitHub repository (it's similar to DockerHub)
+5. When this done, it means there's an externally accessible copy of your binaries/images in a container repository
+6. At this point we would like to trigger a redeployment of our [render.com]() services
+    - This can again be done from a GitHub Actions workflow since [render.com]() allows this (via redeploy hooks or URLs)
+    - For this to work you'd need to first defined your services so they exists
+    - There's a way to create services automatically (on [render.com]() and on other such platforms, like Vercel, AWS, etc.), but that's not in the scope of CI/CD, this part would mean you define **infrastructure as code**
+7. Done
+
+If you do everything accordingly you only ever need to make sure you commit your changes. Continuous integration would come into the picture here, because if you commit something into a repo (on a feature branch) that only ever should mean a redeployment of a live service if all unit, integration tests and other checks already passed (which checks also can be part of a GitHub Actions workflow).
