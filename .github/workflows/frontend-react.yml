@@ -18,6 +18,7 @@ jobs:
     with:
       path: frontend/react
       tag: react
-      render-deploy-url: ${{ secrets.RENDER_BACKEND_REACT_DEPLOY_HOOK_URL }}
       build-args: |
         VITE_APP_TITLE=Deployment workshop (GitHub Actions)
+    secrets:
+      render-deploy-url: ${{ secrets.RENDER_BACKEND_REACT_DEPLOY_HOOK_URL }}
