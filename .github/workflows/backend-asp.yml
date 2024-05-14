@@ -1,4 +1,4 @@
-name: Build and push backend ASP image
+name: Build, push and redeploy backend ASP image
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   backend-express:
-    uses: ./.github/workflows/build-and-push.yml
+    uses: ./.github/workflows/build-push-and-redeploy.yml
     permissions:
       contents: read
       packages: write

@@ -1,4 +1,4 @@
-name: Build and push image
+name: Build, push image and redeploy
 
 on:
   workflow_call:

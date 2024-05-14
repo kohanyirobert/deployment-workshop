@@ -1,4 +1,4 @@
-name: Build and push frontend React image
+name: Build, push and redeploy frontend React image
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   frontend-react:
-    uses: ./.github/workflows/build-and-push.yml
+    uses: ./.github/workflows/build-push-and-redeploy.yml
     permissions:
       contents: read
       packages: write
