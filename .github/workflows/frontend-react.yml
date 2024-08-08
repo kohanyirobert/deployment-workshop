@@ -18,7 +18,6 @@ jobs:
     with:
       path: frontend/react
       tag: react
-      # **Important**: appending trailing / after the URL makes nginx *not* pass a matched location prefix to the proxy, e.g. omits /api
       build-args: |
         VITE_APP_TITLE=Deployment workshop (GitHub Actions)
         UPSTREAM_HOST=deployment-workshop-asp.onrender.com
