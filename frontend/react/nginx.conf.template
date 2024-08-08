@@ -7,7 +7,7 @@ server {
         try_files $uri $uri/ /index.html;
     }
 
-    location /app/ {
+    location /api/ {
         proxy_pass ${UPSTREAM_URL};
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
