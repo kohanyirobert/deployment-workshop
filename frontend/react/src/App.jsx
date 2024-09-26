@@ -34,7 +34,7 @@ function App() {
       {error
         ? <code>Something went wrong: {error}</code>
         : <>
-          <p>${message}</p>
+          <p>{message}</p>
           <ul>{cars.map(car => <Car key={car.id} {...car} />)}</ul>
         </>
       }
