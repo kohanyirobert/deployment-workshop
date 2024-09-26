@@ -13,4 +13,4 @@ RUN apk add --no-cache gettext bash
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.conf.template /etc/nginx/conf.d/nginx.conf.template
 EXPOSE 80
-CMD ["/bin/bash", "-c", "envsubst '${UPSTREAM_URL}' < /etc/nginx/conf.d/nginx.conf.template > /etc/nginx/conf.d/default.conf ; nginx -g daemon off;"]
+CMD ["/bin/bash", "-c", "envsubst '${UPSTREAM_URL}' < /etc/nginx/conf.d/nginx.conf.template > /etc/nginx/conf.d/default.conf ; nginx -g 'daemon off;'"]
