@@ -8,7 +8,7 @@
     "start": "dotenvx run --env-file=.env.local --env-file=.env -- node index.js"
   },
   "dependencies": {
-    "express": "^4.19.2",
+    "express": "^4.21.0",
     "pg-connection-string": "^2.7.0",
     "pg-promise": "^11.6.0"
   },
