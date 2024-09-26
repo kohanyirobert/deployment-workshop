@@ -4,6 +4,7 @@ import './App.css'
 
 function App() {
   const [error, setError] = useState(null)
+  const [message, setMessage] = useState('')
   const [cars, setCars] = useState([])
 
   useEffect(() => {
@@ -11,17 +12,17 @@ function App() {
       try {
         const response = await fetch(`${import.meta.env.BASE_URL}api/cars`)
         if (response.status === 200) {
-          const cars = await response.json()
-          setCars(cars)
+          const result = await response.json()
+          setMessage(result.message)
+          setCars(result.cars)
         } else {
-          const message = `${response.statusText} ${response.status}`
-          setError(message)
-          console.error(message)
+          const error = `${response.statusText} ${response.status}`
+          setError(error)
+          console.error(error)
         }
       } catch (e) {
-        const message = `${response.statusText} ${response.status}`
-        setError(message)
-        console.error(message)
+        setError(e)
+        console.error(e)
       }
     }
     fetchCars()
@@ -32,7 +33,10 @@ function App() {
       <h1>{import.meta.env.VITE_APP_TITLE}</h1>
       {error
         ? <code>Something went wrong: {error}</code>
-        : <ul>{cars.map(car => <Car key={car.id} {...car} />)}</ul>
+        : <>
+          <p>${message}</p>
+          <ul>{cars.map(car => <Car key={car.id} {...car} />)}</ul>
+        </>
       }
     </>
   )
