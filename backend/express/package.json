@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "express": "^4.19.2",
+    "pg-connection-string": "^2.7.0",
     "pg-promise": "^11.6.0"
   },
   "devDependencies": {

@@ -1,9 +1,14 @@
 import os from 'node:os'
 import express from 'express'
 import pgPromise from 'pg-promise'
+import pgConnectionString from 'pg-connection-string';
 
 const pgp = pgPromise()
-const db = pgp(process.env.PG_URL)
+const config = pgConnectionString.parse(process.env.PG_URL)
+config.ssl = {
+    rejectUnauthorized: false
+}
+const db = pgp(config)
 
 const app = express()
 
