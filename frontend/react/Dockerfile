@@ -9,8 +9,8 @@ RUN npm run build
 FROM nginx:alpine
 ARG UPSTREAM_URL
 ENV UPSTREAM_URL=$UPSTREAM_URL
-RUN apk add --no-cache gettext
+RUN apk add --no-cache gettext bash
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.conf.template /etc/nginx/conf.d/nginx.conf.template
 EXPOSE 80
-CMD ["bash", "-c", "envsubst '${UPSTREAM_URL}' < /etc/nginx/conf.d/nginx.conf.template > /etc/nginx/conf.d/default.conf && nginx -g daemon off;"]
+CMD ["/bin/bash", "-c", "envsubst '${UPSTREAM_URL}' < /etc/nginx/conf.d/nginx.conf.template > /etc/nginx/conf.d/default.conf && nginx -g daemon off;"]
